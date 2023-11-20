@@ -42,8 +42,8 @@ def main(args):
 
     # todo: run training and evaluation for number or epochs (from argument parser)
     #  and print results (accumulated) from each epoch (train and val separately)
-    class_loss = tf.metrics.Mean('classifier')
-    for i in range(int(args.epochs)):
+    class_loss = tf.metrics.Mean('flat classifier')
+    for _ in range(int(args.epochs)):
         class_loss.reset_states()
         with tqdm.tqdm(total=60000) as pbar:
 
