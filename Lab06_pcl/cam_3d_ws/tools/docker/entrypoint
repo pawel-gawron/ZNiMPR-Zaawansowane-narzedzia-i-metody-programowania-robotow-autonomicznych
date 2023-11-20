@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -f "${HOME}/cam_3d_ws/install/setup.bash" ]; then 
+    echo "source ${HOME}/cam_3d_ws/install/setup.bash" >> ${HOME}/.bashrc;
+fi
+
+
+echo "Startup completed."
+exec "$@"
