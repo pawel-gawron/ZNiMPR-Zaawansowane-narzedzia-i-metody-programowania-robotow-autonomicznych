@@ -21,6 +21,19 @@
 #include "pcl/point_types.h"
 #include "pcl/filters/voxel_grid.h"
 
+#include "pcl_conversions/pcl_conversions.h"
+#include "rclcpp/node.hpp"
+#include "rclcpp/rclcpp.hpp"
+#include "sensor_msgs/msg/point_cloud2.hpp"
+
+#include <pcl/ModelCoefficients.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_types.h>
+#include <pcl/sample_consensus/method_types.h>
+#include <pcl/sample_consensus/model_types.h>
+#include <pcl/segmentation/sac_segmentation.h>
+#include <pcl/filters/extract_indices.h>
+
 
 namespace perception
 {
@@ -35,6 +48,13 @@ public:
   void segmentation(const pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_input,
   pcl::ModelCoefficients::Ptr & coefficients,
   pcl::PointIndices::Ptr & inliers);
+  void extract(const pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_input,
+  pcl::ModelCoefficients::Ptr & coefficients,
+  pcl::PointIndices::Ptr & inliers);
+  void extract(const pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_input,
+  pcl::PointIndices::Ptr & inliers,
+  sensor_msgs::msg::PointCloud2 & plane_msg,
+  const sensor_msgs::msg::PointCloud2::SharedPtr & msg);
 };
 
 }  // namespace gawron_plane_seg

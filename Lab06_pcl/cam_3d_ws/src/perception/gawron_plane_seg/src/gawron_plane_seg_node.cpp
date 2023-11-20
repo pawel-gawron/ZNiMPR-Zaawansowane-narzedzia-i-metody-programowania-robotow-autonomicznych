@@ -41,35 +41,13 @@ void GawronPlaneSegNode::planeCallback(const sensor_msgs::msg::PointCloud2::Shar
 
   pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients);
   pcl::PointIndices::Ptr inliers(new pcl::PointIndices);
-  // Create the segmentation object
-  pcl::SACSegmentation<pcl::PointXYZ> seg;
-  // Optional
-  seg.setOptimizeCoefficients(true);
-  // Mandatory
-  seg.setModelType(pcl::SACMODEL_PLANE);
-  seg.setMethodType(pcl::SAC_RANSAC);
-  seg.setDistanceThreshold(0.005);
-
-  seg.setInputCloud(pcl_input);
-  seg.segment(*inliers, *coefficients);
-
-  std::cerr << "Model coefficients: " << coefficients->values[0] << " " 
-                                    << coefficients->values[1] << " "
-                                    << coefficients->values[2] << " " 
-                                    << coefficients->values[3] << std::endl;
-
-  // Create a new cloud containing only the inlier points
-  pcl::PointCloud<pcl::PointXYZ>::Ptr inlier_cloud(new pcl::PointCloud<pcl::PointXYZ>);
-  pcl::ExtractIndices<pcl::PointXYZ> extract;
-
-  extract.setInputCloud(pcl_input);
-  extract.setIndices(inliers);
-  extract.filter(*inlier_cloud);
+ 
+  gawron_plane_seg_->segmentation(pcl_input, coefficients, inliers);
 
   sensor_msgs::msg::PointCloud2 plane_msg;
 
-  pcl::toROSMsg(*inlier_cloud, plane_msg);
-  plane_msg.header = msg->header;
+  gawron_plane_seg_->extract(pcl_input, inliers, plane_msg, msg);
+
   plane_pub_->publish(plane_msg);
 }
 
