@@ -1,1 +1,0 @@
-/home/pawel/cam_3d_ws/build/gawron_plane_meta/ament_cmake_core/gawron_plane_metaConfig.cmake

@@ -1,1 +1,0 @@
-/home/pawel/cam_3d_ws/src/perception/gawron_plane_meta/launch/gawron_plane_meta.launch.py

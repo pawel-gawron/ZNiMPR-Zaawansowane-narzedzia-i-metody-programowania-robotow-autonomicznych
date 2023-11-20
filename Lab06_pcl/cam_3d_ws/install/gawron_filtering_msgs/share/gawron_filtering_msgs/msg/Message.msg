@@ -1,1 +1,0 @@
-/home/pawel/cam_3d_ws/src/interface/gawron_filtering_msgs/msg/Message.msg
