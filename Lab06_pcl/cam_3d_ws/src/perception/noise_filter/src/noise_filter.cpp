@@ -14,6 +14,9 @@
 // limitations under the License.
 
 #include "noise_filter/noise_filter.hpp"
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_types.h>
+#include <pcl/filters/statistical_outlier_removal.h>
 
 
 namespace perception
@@ -30,6 +33,17 @@ void NoiseFilter::downsampleCloud(
   pcl::VoxelGrid<pcl::PointXYZ> vg;
   vg.setInputCloud(pcl_input.makeShared());
   vg.setLeafSize(leaf_size_, leaf_size_, leaf_size_);
+  vg.filter(pcl_output);
+}
+
+void NoiseFilter::removeOutliers(
+  const pcl::PointCloud<pcl::PointXYZ> & pcl_input,
+  pcl::PointCloud<pcl::PointXYZ> & pcl_output)
+{
+  pcl::StatisticalOutlierRemoval<pcl::PointXYZ> vg;
+  vg.setInputCloud(pcl_input.makeShared());
+  vg.setMeanK(80);
+  vg.setStddevMulThresh(0.5);
   vg.filter(pcl_output);
 }
 

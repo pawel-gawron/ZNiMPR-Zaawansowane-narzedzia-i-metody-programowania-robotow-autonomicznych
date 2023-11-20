@@ -31,7 +31,8 @@ NoiseFilterNode::NoiseFilterNode(const rclcpp::NodeOptions & options)
     "input_cloud", custom_qos, std::bind(
       &NoiseFilterNode::cloudCallback, this,
       std::placeholders::_1));
-  cloud_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_cloud", custom_qos);
+  cloud_pub_filtered_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_cloud_filtered", custom_qos);
+  cloud_pub_downsampled_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_cloud_downsampled", custom_qos);
   auto leaf_size = this->declare_parameter("leaf_size", 0.001);
   noise_filter_ = std::make_unique<NoiseFilter>();
   noise_filter_->setParameters(leaf_size);
@@ -41,15 +42,22 @@ void NoiseFilterNode::cloudCallback(const sensor_msgs::msg::PointCloud2::SharedP
 {
   pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_input(new pcl::PointCloud<pcl::PointXYZ>);
   pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_downsampled(new pcl::PointCloud<pcl::PointXYZ>);
+  pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_filtered(new pcl::PointCloud<pcl::PointXYZ>);
+  sensor_msgs::msg::PointCloud2 downsampled_msg;
   sensor_msgs::msg::PointCloud2 filtered_msg;
 
   pcl::fromROSMsg(*msg, *pcl_input);
   noise_filter_->downsampleCloud(*pcl_input, *pcl_downsampled);
-  // noise_filter_->removeOutliers(*pcl_downsampled, *pcl_filtered);
+  noise_filter_->removeOutliers(*pcl_downsampled, *pcl_filtered);
 
-  pcl::toROSMsg(*pcl_downsampled, filtered_msg);
+  // filtered
+  pcl::toROSMsg(*pcl_filtered, filtered_msg);
   filtered_msg.header = msg->header;
-  cloud_pub_->publish(filtered_msg);
+  cloud_pub_filtered_->publish(filtered_msg);
+  // downsampled
+  pcl::toROSMsg(*pcl_downsampled, downsampled_msg);
+  downsampled_msg.header = msg->header;
+  cloud_pub_downsampled_->publish(downsampled_msg);
 }
 
 

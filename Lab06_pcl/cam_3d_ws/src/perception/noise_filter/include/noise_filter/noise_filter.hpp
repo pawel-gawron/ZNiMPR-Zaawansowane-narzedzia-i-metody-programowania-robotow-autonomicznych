@@ -34,6 +34,9 @@ public:
   void downsampleCloud(
     const pcl::PointCloud<pcl::PointXYZ> & pcl_input,
     pcl::PointCloud<pcl::PointXYZ> & pcl_output);
+  void removeOutliers(
+    const pcl::PointCloud<pcl::PointXYZ> & pcl_input,
+    pcl::PointCloud<pcl::PointXYZ> & pcl_output);
 
 private:
   float leaf_size_;

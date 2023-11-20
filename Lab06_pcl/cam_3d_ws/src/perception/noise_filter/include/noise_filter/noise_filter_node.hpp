@@ -38,7 +38,8 @@ private:
   void cloudCallback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const;
   std::unique_ptr<NoiseFilter> noise_filter_ {nullptr};
   rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr cloud_sub_;
-  rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr cloud_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr cloud_pub_filtered_;
+  rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr cloud_pub_downsampled_;
 };
 
 }  // namespace noise_filter
