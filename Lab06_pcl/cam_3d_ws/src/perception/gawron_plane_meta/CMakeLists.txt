@@ -45,7 +45,7 @@ ament_auto_add_library(${PROJECT_NAME}_node SHARED
   ${GAWRON_PLANE_META_NODE_HEADERS}
 )
 rclcpp_components_register_node(${PROJECT_NAME}_node
-  PLUGIN "gawron_plane_meta::GawronPlaneMetaNode"
+  PLUGIN "perception::gawron_plane_meta::GawronPlaneMetaNode"
   EXECUTABLE ${PROJECT_NAME}_node_exe
 )
 

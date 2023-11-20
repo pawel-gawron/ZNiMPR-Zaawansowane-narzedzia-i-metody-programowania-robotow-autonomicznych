@@ -14,6 +14,8 @@
 
 #include "gawron_plane_meta/gawron_plane_meta_node.hpp"
 
+namespace perception
+{
 namespace gawron_plane_meta
 {
 
@@ -27,41 +29,31 @@ GawronPlaneMetaNode::GawronPlaneMetaNode(const rclcpp::NodeOptions & options)
     &GawronPlaneMetaNode::planeMetaCallback, this,
     std::placeholders::_1));
   msgs_pub_ = this->create_publisher<gawron_filtering_msgs::msg::Message>("output_centroid", custom_qos);
-  gawron_plane_meta_ = std::make_unique<gawron_plane_meta::GawronPlaneMeta>();
-  param_name_ = this->declare_parameter("param_name", 456);
-  gawron_plane_meta_->foo(param_name_);
+  gawron_plane_meta_ = std::make_unique<GawronPlaneMeta>();
+  gawron_plane_meta_->welcome();
 }
 
 void GawronPlaneMetaNode::planeMetaCallback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const
 {
-  auto metadata_cloud = std::make_unique<gawron_filtering_msgs::msg::Message>();
+  auto metadata_cloud = std::make_shared<gawron_filtering_msgs::msg::Message>();
 
   pcl::PointCloud<pcl::PointXYZ>::Ptr plane_input(new pcl::PointCloud<pcl::PointXYZ>);
 
   pcl::fromROSMsg(*msg, *plane_input);
 
   pcl::PointXYZ centroid;
-  pcl::computeCentroid(*plane_input, centroid);
+  
+  gawron_plane_meta_->computeCentroid(plane_input, centroid);
 
-  std::cerr << "Centroid coordinates: " << centroid.x << " " 
-                                        << centroid.y << " "
-                                        << centroid.z << std::endl;
+  gawron_plane_meta_->assignMetadata(metadata_cloud, msg, centroid);
 
-  metadata_cloud->header = msg->header;
-  metadata_cloud->height = msg->height;
-  metadata_cloud->width = msg->width;
-  metadata_cloud->length = msg->data.size()/(msg->width*msg->height);
-  metadata_cloud->number_of_points = msg->data.size();
-  metadata_cloud->center.x = centroid.x;
-  metadata_cloud->center.y = centroid.y;
-  metadata_cloud->center.z = centroid.z;
-
-  msgs_pub_->publish(std::move(metadata_cloud));
+  msgs_pub_->publish(*metadata_cloud);
 
   }
 
 }  // namespace gawron_plane_meta
+}  // namespace perception
 
 #include "rclcpp_components/register_node_macro.hpp"
 
-RCLCPP_COMPONENTS_REGISTER_NODE(gawron_plane_meta::GawronPlaneMetaNode)
+RCLCPP_COMPONENTS_REGISTER_NODE(perception::gawron_plane_meta::GawronPlaneMetaNode)

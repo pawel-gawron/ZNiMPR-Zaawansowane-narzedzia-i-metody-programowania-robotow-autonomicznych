@@ -17,7 +17,7 @@ def generate_launch_description():
             
     return launch.LaunchDescription([
         ExecuteProcess(
-            cmd=['ros2', 'bag', 'play', 'rosbag2_2022_11_21-11_38_22_0.db3', '--loop'],
+            cmd=['ros2', 'bag', 'play', 'rosbag/rosbag2_2022_11_21-11_38_22_0.db3', '--loop'],
             output='screen',
         ),
         noise_filter_config_param,
@@ -35,9 +35,9 @@ def generate_launch_description():
                 ],
             arguments=['--log-level', 'info', '--enable-stdout-logs']),
         launch_ros.actions.Node(
-            package='surname_plane',
-            executable='surname_plane_node_exe',
-            name='surname_plane_launch',
+            package='gawron_plane_seg',
+            executable='gawron_plane_seg_node_exe',
+            name='gawron_plane_seg_launch',
             arguments=['--log-level', 'info', '--enable-stdout-logs'],
             output='screen'),
         launch_ros.actions.Node(

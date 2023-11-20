@@ -31,9 +31,11 @@
 
 #include "gawron_filtering_msgs/msg/message.hpp"
 
+namespace perception
+{
 namespace gawron_plane_meta
 {
-using GawronPlaneMetaPtr = std::unique_ptr<gawron_plane_meta::GawronPlaneMeta>;
+using GawronPlaneMetaPtr = std::unique_ptr<GawronPlaneMeta>;
 
 class GAWRON_PLANE_META_PUBLIC GawronPlaneMetaNode : public rclcpp::Node
 {
@@ -48,5 +50,6 @@ private:
   rclcpp::Publisher<gawron_filtering_msgs::msg::Message>::SharedPtr msgs_pub_;
 };
 }  // namespace gawron_plane_meta
+}  // namespace perception
 
 #endif  // GAWRON_PLANE_META__GAWRON_PLANE_META_NODE_HPP_

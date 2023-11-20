@@ -20,7 +20,17 @@
 #include "gawron_plane_meta/visibility_control.hpp"
 #include "pcl/point_types.h"
 #include "pcl/filters/voxel_grid.h"
+#include "gawron_filtering_msgs/msg/message.hpp"
 
+#include <pcl/point_cloud.h>
+#include <pcl/filters/passthrough.h>
+#include <pcl/filters/extract_indices.h>
+#include <pcl/common/centroid.h>
+
+#include "sensor_msgs/msg/point_cloud2.hpp"
+
+namespace perception
+{
 namespace gawron_plane_meta
 {
 
@@ -28,9 +38,15 @@ class GAWRON_PLANE_META_PUBLIC GawronPlaneMeta
 {
 public:
   GawronPlaneMeta();
-  int64_t foo(int64_t bar) const;
+  void welcome();
+  void assignMetadata(gawron_filtering_msgs::msg::Message::SharedPtr metadata_cloud,
+  sensor_msgs::msg::PointCloud2::SharedPtr msg,
+  pcl::PointXYZ & centroid);
+  void computeCentroid(pcl::PointCloud<pcl::PointXYZ>::Ptr plane_input,
+  pcl::PointXYZ & centroid);
 };
 
 }  // namespace gawron_plane_meta
+}  // namespace perception
 
 #endif  // GAWRON_PLANE_META__GAWRON_PLANE_META_HPP_

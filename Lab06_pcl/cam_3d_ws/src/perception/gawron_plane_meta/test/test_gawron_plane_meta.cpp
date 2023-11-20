@@ -16,8 +16,6 @@
 #include "gawron_plane_meta/gawron_plane_meta.hpp"
 
 TEST(TestGawronPlaneMeta, TestHello) {
-  std::unique_ptr<gawron_plane_meta::GawronPlaneMeta> gawron_plane_meta_ =
-    std::make_unique<gawron_plane_meta::GawronPlaneMeta>();
-  auto result = gawron_plane_meta_->foo(999);
-  EXPECT_EQ(result, 999);
+  std::unique_ptr<perception::gawron_plane_meta::GawronPlaneMeta> gawron_plane_meta_ =
+    std::make_unique<perception::gawron_plane_meta::GawronPlaneMeta>();
 }

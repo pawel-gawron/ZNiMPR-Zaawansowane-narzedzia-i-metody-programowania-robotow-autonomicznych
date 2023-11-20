@@ -16,6 +16,8 @@
 
 #include <iostream>
 
+namespace perception
+{
 namespace gawron_plane_meta
 {
 
@@ -23,10 +25,33 @@ GawronPlaneMeta::GawronPlaneMeta()
 {
 }
 
-int64_t GawronPlaneMeta::foo(int64_t bar) const
+void GawronPlaneMeta::welcome()
 {
-  std::cout << "Hello World, " << bar << std::endl;
-  return bar;
+  std::cerr << "gawron_plane_meta node start" << std::endl;
 }
 
-}  // namespace gawron_plane_meta
+void GawronPlaneMeta::computeCentroid(pcl::PointCloud<pcl::PointXYZ>::Ptr plane_input,
+  pcl::PointXYZ & centroid)
+{
+  pcl::computeCentroid(*plane_input, centroid);
+  std::cerr << "Centroid coordinates: " << centroid.x << " " 
+                                        << centroid.y << " "
+                                        << centroid.z << std::endl;
+}
+
+void GawronPlaneMeta::assignMetadata(gawron_filtering_msgs::msg::Message::SharedPtr metadata_cloud,
+  sensor_msgs::msg::PointCloud2::SharedPtr msg,
+  pcl::PointXYZ & centroid)
+{
+  metadata_cloud->header = msg->header;
+  metadata_cloud->height = msg->height;
+  metadata_cloud->width = msg->width;
+  metadata_cloud->length = msg->data.size()/(msg->width*msg->height);
+  metadata_cloud->number_of_points = msg->data.size();
+  metadata_cloud->center.x = centroid.x;
+  metadata_cloud->center.y = centroid.y;
+  metadata_cloud->center.z = centroid.z;
+}
+
+}   // namespace gawron_plane_meta
+}   // namespace perception

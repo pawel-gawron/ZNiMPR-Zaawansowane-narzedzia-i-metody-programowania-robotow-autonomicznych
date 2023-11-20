@@ -16,7 +16,7 @@
 
   <depend>gawron_plane_meta</depend>
   <depend>noise_filter</depend>
-  <depend>surname_plane</depend>
+  <depend>gawron_plane_seg</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
