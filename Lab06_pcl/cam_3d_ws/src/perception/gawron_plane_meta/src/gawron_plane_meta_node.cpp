@@ -25,10 +25,10 @@ GawronPlaneMetaNode::GawronPlaneMetaNode(const rclcpp::NodeOptions & options)
 :  Node("gawron_plane_meta", options)
 {
   plane_sub_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-    "/output_cloud_filtered", custom_qos, std::bind(
+    "input_cloud", custom_qos, std::bind(
     &GawronPlaneMetaNode::planeMetaCallback, this,
     std::placeholders::_1));
-  msgs_pub_ = this->create_publisher<gawron_filtering_msgs::msg::Message>("output_centroid", custom_qos);
+  msgs_pub_ = this->create_publisher<gawron_filtering_msgs::msg::Message>("metadata_cloud", custom_qos);
   gawron_plane_meta_ = std::make_unique<GawronPlaneMeta>();
   gawron_plane_meta_->welcome();
 }

@@ -32,6 +32,10 @@ def launch_setup(context, *args, **kwargs):
         package='gawron_plane_seg',
         executable='gawron_plane_seg_node_exe',
         name='gawron_plane_seg_node',
+        remappings=[
+                ("input_cloud", "/noise_filter_launch/output_cloud_filtered"),
+                ("output_cloud", "~/output_plane")
+                ],
         parameters=[
             param_path
         ],

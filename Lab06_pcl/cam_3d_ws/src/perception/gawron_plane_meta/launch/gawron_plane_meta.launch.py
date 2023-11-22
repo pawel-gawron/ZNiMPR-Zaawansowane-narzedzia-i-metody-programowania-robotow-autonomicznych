@@ -32,6 +32,10 @@ def launch_setup(context, *args, **kwargs):
         package='gawron_plane_meta',
         executable='gawron_plane_meta_node_exe',
         name='gawron_plane_meta_node',
+        remappings=[
+                ("input_cloud", "/gawron_plane_seg_launch/output_plane"),
+                ("metadata_cloud", "~/output_centroid")
+                ],
         parameters=[
             param_path
         ],

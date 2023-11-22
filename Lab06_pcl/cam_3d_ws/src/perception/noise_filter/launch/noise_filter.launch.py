@@ -36,7 +36,8 @@ def generate_launch_description():
         output='screen',
         remappings=[
                 ("input_cloud", "/phoxi/phoxi_camera/cloud"),
-                ("output_cloud", "~/cloud_filtered")
+                ("output_cloud", "~/output_cloud_filtered"),
+                ("output_cloud_downsampled", "~/output_cloud_downsampled")
                 ],
         parameters=[
             LaunchConfiguration('noise_filter_config_param_file')

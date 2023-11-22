@@ -25,10 +25,10 @@ GawronPlaneSegNode::GawronPlaneSegNode(const rclcpp::NodeOptions & options)
 :  Node("gawron_plane_seg", options)
 {
   cloud_sub_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-    "/output_cloud_filtered", custom_qos, std::bind(
+    "input_cloud", custom_qos, std::bind(
     &GawronPlaneSegNode::planeCallback, this,
     std::placeholders::_1));
-  plane_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_plane", custom_qos);
+  plane_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_cloud", custom_qos);
   gawron_plane_seg_ = std::make_unique<GawronPlaneSeg>();
   gawron_plane_seg_->welcome();
 }

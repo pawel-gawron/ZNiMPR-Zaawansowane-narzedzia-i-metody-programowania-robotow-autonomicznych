@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.14)
 project(gawron_plane_meta)
 
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+add_compile_options(-std=c++17)
+
 find_package(ament_cmake_auto REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(PCL REQUIRED)
@@ -11,7 +16,7 @@ ament_auto_find_build_dependencies(REQUIRED
   ${${PROJECT_NAME}_BUILDTOOL_DEPENDS}
 )
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+# add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 set(GAWRON_PLANE_META_LIB_SRC
   src/gawron_plane_meta.cpp

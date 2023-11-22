@@ -46,10 +46,10 @@ void GawronPlaneSeg::segmentation(const pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_
   seg.setInputCloud(pcl_input);
   seg.segment(*inliers, *coefficients);
 
-  std::cerr << "Model coefficients: " << coefficients->values[0] << " " 
-                                      << coefficients->values[1] << " "
-                                      << coefficients->values[2] << " " 
-                                      << coefficients->values[3] << std::endl;
+  // std::cerr << "Model coefficients: " << coefficients->values[0] << " " 
+  //                                     << coefficients->values[1] << " "
+  //                                     << coefficients->values[2] << " " 
+  //                                     << coefficients->values[3] << std::endl;
 }
 
 void GawronPlaneSeg::extract(const pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_input,

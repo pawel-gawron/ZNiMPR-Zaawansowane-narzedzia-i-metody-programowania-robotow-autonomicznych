@@ -31,7 +31,7 @@ NoiseFilterNode::NoiseFilterNode(const rclcpp::NodeOptions & options)
     "input_cloud", custom_qos, std::bind(
       &NoiseFilterNode::cloudCallback, this,
       std::placeholders::_1));
-  cloud_pub_filtered_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_cloud_filtered", custom_qos);
+  cloud_pub_filtered_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_cloud", custom_qos);
   cloud_pub_downsampled_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("output_cloud_downsampled", custom_qos);
   auto leaf_size = this->declare_parameter("leaf_size", 0.001);
   noise_filter_ = std::make_unique<NoiseFilter>();

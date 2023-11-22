@@ -34,9 +34,9 @@ void GawronPlaneMeta::computeCentroid(pcl::PointCloud<pcl::PointXYZ>::Ptr plane_
   pcl::PointXYZ & centroid)
 {
   pcl::computeCentroid(*plane_input, centroid);
-  std::cerr << "Centroid coordinates: " << centroid.x << " " 
-                                        << centroid.y << " "
-                                        << centroid.z << std::endl;
+  // std::cerr << "Centroid coordinates: " << centroid.x << " " 
+  //                                       << centroid.y << " "
+  //                                       << centroid.z << std::endl;
 }
 
 void GawronPlaneMeta::assignMetadata(gawron_filtering_msgs::msg::Message::SharedPtr metadata_cloud,
