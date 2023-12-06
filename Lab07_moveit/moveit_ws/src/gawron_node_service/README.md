@@ -14,6 +14,8 @@ ROS2 node for service handling, plan and execute panda arm moving.
 cd $HOME
 cd moveit_ws/
 rosdep install --from-paths src --ignore-src -y
+or
+rosdep update
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=On --packages-up-to gawron_node_service
 source install/setup.bash
 ```
