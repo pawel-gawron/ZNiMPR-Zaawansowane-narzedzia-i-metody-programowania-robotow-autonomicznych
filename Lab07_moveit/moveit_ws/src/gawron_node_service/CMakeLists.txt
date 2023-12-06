@@ -8,6 +8,12 @@ ament_auto_find_build_dependencies(REQUIRED
 )
 
 find_package(gawron_service REQUIRED)
+find_package(moveit_ros_planning_interface REQUIRED)
+
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 
@@ -40,6 +46,12 @@ ament_auto_add_library(${PROJECT_NAME}_node SHARED
 rclcpp_components_register_node(${PROJECT_NAME}_node
   PLUGIN "gawron_node_service::GawronNodeServiceNode"
   EXECUTABLE ${PROJECT_NAME}_node_exe
+)
+
+ament_target_dependencies(
+  gawron_node_service_node
+  tf2
+  tf2_geometry_msgs
 )
 
 if(BUILD_TESTING)

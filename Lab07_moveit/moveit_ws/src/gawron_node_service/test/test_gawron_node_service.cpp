@@ -18,6 +18,4 @@
 TEST(TestGawronNodeService, TestHello) {
   std::unique_ptr<gawron_node_service::GawronNodeService> gawron_node_service_ =
     std::make_unique<gawron_node_service::GawronNodeService>();
-  auto result = gawron_node_service_->foo(999);
-  EXPECT_EQ(result, 999);
 }

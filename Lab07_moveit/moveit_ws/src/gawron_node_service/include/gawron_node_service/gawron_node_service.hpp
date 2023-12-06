@@ -22,6 +22,8 @@
 #include "gawron_node_service/visibility_control.hpp"
 #include "gawron_service/srv/custom_service.hpp"
 
+#include <moveit/move_group_interface/move_group_interface.h>
+
 
 namespace gawron_node_service
 {
@@ -30,8 +32,7 @@ class GAWRON_NODE_SERVICE_PUBLIC GawronNodeService
 {
 public:
   GawronNodeService();
-  int64_t foo(int64_t bar) const;
-  // void service_msg(const std::shared_ptr<gawron_service::srv::CustomService::Request>);
+  std::string planner_selector(int planner_id_selection, std::vector<std::string> planner_id);
 };
 
 }  // namespace gawron_node_service

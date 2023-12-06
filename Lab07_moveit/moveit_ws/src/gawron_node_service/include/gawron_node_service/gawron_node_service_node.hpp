@@ -19,6 +19,10 @@
 
 #include "gawron_node_service/gawron_node_service.hpp"
 
+#include <moveit/move_group_interface/move_group_interface.h>
+#include "tf2/LinearMath/Quaternion.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
+
 namespace gawron_node_service
 {
 using GawronNodeServicePtr = std::unique_ptr<gawron_node_service::GawronNodeService>;
@@ -27,12 +31,20 @@ class GAWRON_NODE_SERVICE_PUBLIC GawronNodeServiceNode : public rclcpp::Node
 {
 public:
   explicit GawronNodeServiceNode(const rclcpp::NodeOptions & options);
+  rclcpp::Service<gawron_service::srv::CustomService>::SharedPtr service_;
 
 private:
   GawronNodeServicePtr gawron_node_service_{nullptr};
-  int64_t param_name_{123};
+  std::vector<std::string> planner_id_;
+  int planner_id_selection;
+  std::string planner{"RRTConnectConfigDefault"};
   rclcpp::Service<gawron_service::srv::CustomService>::SharedPtr service;
-  // void service_msg(const std::shared_ptr<gawron_service::srv::CustomService::Request> request);
+  void service_msg(const std::shared_ptr<gawron_service::srv::CustomService::Request> request,
+                  const std::shared_ptr<gawron_service::srv::CustomService::Response> response);
+  void plan_and_execute(moveit::planning_interface::MoveGroupInterface &move_group_interface,
+                        const std::shared_ptr<gawron_service::srv::CustomService::Response>);
+  void pose_target_and_planner(const std::shared_ptr<gawron_service::srv::CustomService::Request> request,
+                                moveit::planning_interface::MoveGroupInterface &move_group_interface);
 };
 }  // namespace gawron_node_service
 

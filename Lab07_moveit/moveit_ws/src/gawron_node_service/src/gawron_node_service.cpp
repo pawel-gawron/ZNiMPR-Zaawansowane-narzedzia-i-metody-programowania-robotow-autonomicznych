@@ -23,16 +23,9 @@ GawronNodeService::GawronNodeService()
 {
 }
 
-int64_t GawronNodeService::foo(int64_t bar) const
+std::string GawronNodeService::planner_selector(int planner_id_selection, std::vector<std::string> planner_id)
 {
-  std::cout << "Hello World, " << bar << std::endl;
-  return bar;
+        return planner_id[planner_id_selection];
 }
-
-// void GawronNodeService::service_msg(const std::shared_ptr<gawron_service::srv::CustomService::Request> request)
-// {
-//   RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Incoming request\nx: %f" " y: %f" " z: %f",
-//                 request->position.x, request->position.y, request->position.z);
-// }
 
 }  // namespace gawron_node_service

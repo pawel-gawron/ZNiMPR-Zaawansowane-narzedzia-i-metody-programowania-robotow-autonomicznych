@@ -33,7 +33,8 @@ def launch_setup(context, *args, **kwargs):
         executable='gawron_node_service_node_exe',
         name='gawron_node_service_node',
         parameters=[
-            param_path
+            param_path,
+            {'planner_id_selection': LaunchConfiguration('planner_id_selection')}
         ],
         output='screen',
         arguments=['--ros-args', '--log-level', 'info', '--enable-stdout-logs'],
@@ -51,6 +52,8 @@ def generate_launch_description():
         declared_arguments.append(
             DeclareLaunchArgument(name, default_value=default_value)
         )
+
+    add_launch_arg('planner_id_selection', '1')
 
     add_launch_arg('gawron_node_service_param_file', '')
 
