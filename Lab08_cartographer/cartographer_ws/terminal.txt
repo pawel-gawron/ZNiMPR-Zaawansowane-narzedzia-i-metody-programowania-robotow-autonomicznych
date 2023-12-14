@@ -1,0 +1,4 @@
+ros2 bag play rosbag2/rosbag2_2023_12_09-21_25_19_0.db3 --topics /tf_static /localization/kinematic_state /sensing/vesc/imu /sensing/lidar/scan -p
+
+ros2 launch cartographer_demo demo.launch.py
+

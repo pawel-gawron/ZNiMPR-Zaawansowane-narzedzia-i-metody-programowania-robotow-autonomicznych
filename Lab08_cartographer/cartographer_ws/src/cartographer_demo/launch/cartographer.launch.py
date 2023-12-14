@@ -27,37 +27,40 @@ from launch_ros.substitutions import FindPackageShare
 def launch_setup(context, *args, **kwargs):
     pkg_prefix = FindPackageShare('cartographer_demo')
 
-    config_dir = PathJoinSubstitution(pkg_prefix, 'config').perform(context)
+    config_dir = PathJoinSubstitution([pkg_prefix, 'config']).perform(context)
+    print(f"Config directory: {config_dir}")
+
+    log_config = {
+        'log_level': 'info',
+        'enable_stdout_logs': True
+    }
 
     cartographer_node = Node(
-        package='cartographer_node',
-        executable='cartographer_node_exe',
+        package='cartographer_ros',
+        executable='cartographer_node',
         name='cartographer_node',
         parameters=[
-            {'use_sim_time': True}
+            {'use_sim_time': True, 'log_config': log_config}
         ],
         output='screen',
         remappings=[
-                ("imu", "/sensing/imu_corrector/imu"),
+                ("imu", "/sensing/vesc/imu"),
                 ("odom", "/localization/kinematic_state"),
                 ("scan", "/sensing/lidar/scan")
                 ],
-        arguments=['--ros-args', '--log-level', 'info', '--enable-stdout-logs',
-        '--configuration_directory', config_dir,
-        '--configuration_basename', 'mapping.lua'],
+        arguments=['-configuration_directory', config_dir,
+                    '-configuration_basename', 'mapping.lua'],
     )
 
     cartographer_occupancy_grid_node = Node(
-        package='cartographer_occupancy_grid_node',
-        executable='cartographer_occupancy_grid_node_exe',
+        package='cartographer_ros',
+        executable='cartographer_occupancy_grid_node',
         name='cartographer_occupancy_grid_node',
         parameters=[
-            {'use_sim_time': True},
-            {'use_sim_time': True},
-            {'resolution': 0.05}
+            {'use_sim_time': True,
+            'resolution': 0.05}
         ],
         output='screen',
-        arguments=['--ros-args', '--log-level', 'info', '--enable-stdout-logs'],
     )
     return [
         cartographer_node,
