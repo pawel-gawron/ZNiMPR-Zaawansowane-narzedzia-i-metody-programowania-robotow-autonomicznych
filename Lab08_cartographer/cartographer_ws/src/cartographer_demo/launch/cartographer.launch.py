@@ -30,6 +30,19 @@ def launch_setup(context, *args, **kwargs):
     config_dir = PathJoinSubstitution([pkg_prefix, 'config']).perform(context)
     print(f"Config directory: {config_dir}")
 
+    print('mapping: ', LaunchConfiguration('mapping').perform(context))
+
+    if IfCondition(LaunchConfiguration('mapping')).evaluate(context):
+        localization = ''
+        lua_file = 'mapping.lua' 
+        print('Mapping mode')
+        print(localization)
+    else:
+        localization = LaunchConfiguration('map_path').perform(context)
+        lua_file = 'localization.lua'
+        print('Localization mode')
+        print(localization)
+
     log_config = {
         'log_level': 'info',
         'enable_stdout_logs': True
@@ -49,7 +62,8 @@ def launch_setup(context, *args, **kwargs):
                 ("scan", "/sensing/lidar/scan")
                 ],
         arguments=['-configuration_directory', config_dir,
-                    '-configuration_basename', 'mapping.lua'],
+                    '-configuration_basename', lua_file,
+                    '-load_state_filename', localization],
     )
 
     cartographer_occupancy_grid_node = Node(

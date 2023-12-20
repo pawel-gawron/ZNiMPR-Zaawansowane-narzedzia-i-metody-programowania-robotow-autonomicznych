@@ -25,6 +25,18 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def launch_setup(context, *args, **kwargs):
+    configuration_basename = None
+
+    # if IfCondition(LaunchConfiguration('mapping')).evaluate(context):
+    #     configuration_basename = 'mapping.lua'
+    #     print('Mapping mode')
+    #     print(configuration_basename)
+    # else:
+    #     configuration_basename = 'localization.lua'
+    #     path_to_map = LaunchConfiguration('map_path').perform(context)
+    #     print('Localization mode')
+    #     print(path_to_map)
+
     pkg_prefix = FindPackageShare('cartographer_demo')
     rviz_config = PathJoinSubstitution(
         [pkg_prefix, 'rviz', LaunchConfiguration('rviz_config')])
@@ -68,6 +80,9 @@ def generate_launch_description():
     # Tools
     add_launch_arg('rviz', 'true')
     add_launch_arg('rviz_config', 'cartographer.rviz')
+    add_launch_arg('mapping', 'true')
+
+    add_launch_arg('map_path', '')
     # Localization
     # TODO: add args
 
