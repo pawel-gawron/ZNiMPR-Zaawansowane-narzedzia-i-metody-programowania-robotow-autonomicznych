@@ -52,17 +52,17 @@ TRAJECTORY_BUILDER.trajectory_builder_2d.missing_data_ray_length = 25
 
 TRAJECTORY_BUILDER.trajectory_builder_2d.submaps.num_range_data = 100
 TRAJECTORY_BUILDER.pure_localization_trimmer = {
-  max_submaps_to_keep = 3,
+  max_submaps_to_keep = 5,
 }
 
 MAP_BUILDER.use_trajectory_builder_2d = true
 -- tuneable:
 MAP_BUILDER.pose_graph.optimize_every_n_nodes = 3
--- POSE_GRAPH.global_sampling_ratio =  0.0003 --default=0.003
--- POSE_GRAPH.constraint_builder.sampling_ratio = 0.1 --default=0.3
+POSE_GRAPH.global_sampling_ratio =  0.0003 --default=0.003
+POSE_GRAPH.constraint_builder.sampling_ratio = 0.1 --default=0.3
 
 -- -- increase these values when the constraint builder find wrong matches between a new trajectory and an old trajectory
--- POSE_GRAPH.constraint_builder.min_score = 0.3 -- cartographer default 0.55
--- POSE_GRAPH.constraint_builder.global_localization_min_score = 0.35
+POSE_GRAPH.constraint_builder.min_score = 0.3 -- cartographer default 0.55
+POSE_GRAPH.constraint_builder.global_localization_min_score = 0.35
 
 return options
